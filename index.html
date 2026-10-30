@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>官学娇 · 员工体验 / 人力行政 | 个人作品集</title>
+<style>
+:root{
+  --bg:#faf7f2; --ink:#2d2a26; --accent:#e8618c; --accent2:#f6a45c; --green:#7c9a5c;
+  --card:#ffffff; --muted:#8a8378;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 6vw;z-index:100;backdrop-filter:blur(12px);background:rgba(250,247,242,.78);
+  border-bottom:1px solid rgba(0,0,0,.05);animation:fadeDown .8s ease both}
+nav .logo{font-weight:800;font-size:1.1rem;letter-spacing:1px}
+nav .logo span{color:var(--accent)}
+nav ul{display:flex;gap:26px;list-style:none}
+nav a{text-decoration:none;color:var(--ink);font-size:.92rem;position:relative;transition:color .3s}
+nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--accent);transition:width .3s}
+nav a:hover{color:var(--accent)} nav a:hover::after{width:100%}
+@media(max-width:640px){nav ul{gap:14px}nav a{font-size:.8rem}}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  position:relative;padding:0 6vw}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;animation:float 9s ease-in-out infinite}
+.blob1{width:340px;height:340px;background:#f9c1d4;top:12%;left:8%}
+.blob2{width:280px;height:280px;background:#e8edd6;bottom:14%;right:10%;animation-delay:-4s}
+.blob3{width:200px;height:200px;background:#fcd9a8;top:55%;left:22%;animation-delay:-2s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.06)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:none}}
+.hero .avatar{width:118px;height:118px;border-radius:50%;object-fit:cover;border:4px solid #fff;
+  box-shadow:0 10px 30px rgba(232,97,140,.3);animation:pop .9s cubic-bezier(.2,1.4,.4,1) both;position:relative;z-index:2}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+.hero h1{font-size:clamp(2rem,5.5vw,3.4rem);margin:22px 0 10px;position:relative;z-index:2;animation:rise .8s .2s ease both}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.slogan{font-size:clamp(1.2rem,3vw,1.7rem);font-weight:800;letter-spacing:2px;margin-top:6px;position:relative;z-index:2;
+  color:var(--green);animation:rise .8s .35s ease both}
+.typing{font-size:clamp(1rem,2.4vw,1.3rem);color:var(--muted);min-height:1.8em;margin-top:14px;position:relative;z-index:2}
+.typing .cursor{display:inline-block;width:2px;height:1.1em;background:var(--accent);vertical-align:-2px;animation:blink .8s infinite}
+@keyframes blink{50%{opacity:0}}
+.hero .tags{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:26px 0 34px;position:relative;z-index:2;
+  animation:rise .8s .5s ease both}
+.tag{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:999px;padding:8px 18px;font-size:.88rem;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
+.tag:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(232,97,140,.18)}
+.btn{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;
+  padding:14px 38px;border-radius:999px;font-weight:600;box-shadow:0 8px 24px rgba(232,97,140,.35);
+  transition:transform .3s,box-shadow .3s;position:relative;z-index:2;animation:rise .8s .65s ease both}
+.btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 14px 34px rgba(232,97,140,.45)}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.scroll-hint{position:absolute;bottom:28px;color:var(--muted);font-size:.8rem;animation:bob 1.8s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+section{max-width:1080px;margin:0 auto;padding:90px 6vw}
+.sec-title{text-align:center;font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:14px}
+.sec-title::after{content:"";display:block;width:56px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));margin:12px auto 0}
+.sec-sub{text-align:center;color:var(--muted);margin-bottom:52px}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* 关于我 */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+.about-text p{line-height:1.9;color:#55504a;margin-bottom:14px}
+.about-text b{color:var(--accent)}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.stat{background:var(--card);border-radius:20px;padding:26px;text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);transition:transform .35s,box-shadow .35s}
+.stat:hover{transform:translateY(-6px);box-shadow:0 14px 32px rgba(232,97,140,.16)}
+.stat b{display:block;font-size:2rem;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.85rem;color:var(--muted)}
+
+/* 三大策略 */
+.strategy{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
+.scard{background:var(--card);border-radius:22px;padding:30px 26px;box-shadow:0 8px 24px rgba(0,0,0,.06);
+  transition:transform .4s,box-shadow .4s;position:relative;overflow:hidden}
+.scard:hover{transform:translateY(-10px);box-shadow:0 20px 44px rgba(124,154,92,.2)}
+.scard .num{font-size:.8rem;font-weight:800;letter-spacing:3px;color:var(--green)}
+.scard h3{font-size:1.2rem;margin:8px 0 12px}
+.scard p{font-size:.9rem;color:var(--muted);line-height:1.8}
+.scard::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;
+  background:linear-gradient(90deg,var(--green),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.scard:hover::before{transform:scaleX(1)}
+
+/* 用心时刻 */
+.moments-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:18px}
+.moments-head h2{font-size:clamp(1.6rem,3.5vw,2.2rem)}
+.moments-head .desc{color:var(--muted);font-size:.92rem;margin-top:10px}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.fbtn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:999px;padding:8px 20px;font-size:.86rem;
+  cursor:pointer;transition:.3s;color:var(--ink)}
+.fbtn:hover{border-color:var(--accent);color:var(--accent)}
+.fbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:44px 36px;margin-top:26px;align-items:start}
+@media(max-width:760px){.mgrid{grid-template-columns:1fr}}
+.mcard{cursor:default}
+.mcard.hide{display:none}
+.mcard .frame{position:relative;border-radius:16px;overflow:hidden;background:#f2efe9;aspect-ratio:3/4;
+  cursor:grab;user-select:none;touch-action:pan-y}
+.mcard .frame.dragging{cursor:grabbing}
+.mcard .track{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.mcard .frame.dragging .track{transition:none}
+.mcard .track img{width:100%;height:100%;flex:0 0 100%;object-fit:cover;display:block;pointer-events:none}
+.mcard .pager{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.45);color:#fff;
+  font-size:.74rem;padding:4px 14px;border-radius:99px;letter-spacing:1px;pointer-events:none;backdrop-filter:blur(4px)}
+.mcard .nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.85);color:#333;font-size:1rem;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;opacity:0;transition:.3s;box-shadow:0 2px 10px rgba(0,0,0,.15);z-index:3}
+.mcard .frame:hover .nav{opacity:1}
+.mcard .nav:hover{background:#fff;transform:translateY(-50%) scale(1.1)}
+.mcard .nav.prev{left:10px}.mcard .nav.next{right:10px}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.dots i{width:7px;height:7px;border-radius:50%;background:#ddd;transition:.3s;cursor:pointer}
+.dots i.on{background:var(--accent);width:18px;border-radius:99px}
+.mcard .label{font-size:.78rem;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;text-transform:uppercase}
+.mcard h3{font-size:1.15rem;color:#3f5a3a;margin-bottom:8px}
+.mcard p{font-size:.88rem;color:var(--muted);line-height:1.7}
+
+/* 案例 */
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.case{background:var(--card);border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);
+  transition:transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s}
+.case:hover{transform:translateY(-10px) scale(1.015);box-shadow:0 20px 44px rgba(232,97,140,.18)}
+.case .cover{height:150px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;transition:transform .5s}
+.case:hover .cover{transform:scale(1.12)}
+.c1{background:linear-gradient(135deg,#dcead2,#f3f7e8)}
+.c2{background:linear-gradient(135deg,#fbd4d4,#fde8c8)}
+.c3{background:linear-gradient(135deg,#d4e6fa,#e3dcfa)}
+.case .body{padding:22px 24px 26px}
+.case h3{font-size:1.08rem;margin-bottom:8px}
+.case p{font-size:.9rem;color:var(--muted);line-height:1.75;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:.74rem;background:#faf3ee;color:var(--accent);border-radius:99px;padding:4px 12px;font-weight:600}
+
+/* 四季下午茶 */
+.seasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.season{border-radius:20px;padding:28px 22px;color:#fff;transition:transform .4s;box-shadow:0 10px 26px rgba(0,0,0,.12)}
+.season:hover{transform:translateY(-8px) rotate(-1deg)}
+.season h3{font-size:1.15rem;margin-bottom:10px}
+.season p{font-size:.86rem;line-height:1.7;opacity:.95}
+.sp1{background:linear-gradient(135deg,#8fbf6f,#b5d98a)}
+.sp2{background:linear-gradient(135deg,#4fa8c9,#7cc4de)}
+.sp3{background:linear-gradient(135deg,#d99a4e,#e8b977)}
+.sp4{background:linear-gradient(135deg,#7b8bc4,#a3aed6)}
+
+/* 经历时间轴 */
+.timeline{position:relative;max-width:640px;margin:0 auto;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2))}
+.titem{position:relative;padding-bottom:38px}
+.titem::before{content:"";position:absolute;left:-33px;top:6px;width:15px;height:15px;border-radius:50%;
+  background:#fff;border:4px solid var(--accent);transition:transform .3s}
+.titem:hover::before{transform:scale(1.3)}
+.titem h3{font-size:1.05rem} .titem .time{font-size:.8rem;color:var(--accent);font-weight:700;margin:2px 0 8px;display:block}
+.titem p{font-size:.9rem;color:var(--muted);line-height:1.7}
+
+/* 灯箱 */
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:200;cursor:zoom-out}
+#lightbox.show{display:flex}
+#lightbox img{max-width:92%;max-height:90%;border-radius:12px;animation:pop .4s ease both}
+
+/* 联系 */
+.contact-box{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:28px;color:#fff;
+  text-align:center;padding:64px 8vw;box-shadow:0 20px 50px rgba(232,97,140,.3)}
+.contact-box h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:12px}
+.contact-box p{opacity:.9;margin-bottom:28px}
+.contact-box a{background:#fff;color:var(--accent);text-decoration:none;font-weight:700;padding:13px 34px;
+  border-radius:999px;transition:transform .3s,box-shadow .3s;display:inline-block;margin:4px}
+.contact-box a{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  max-width:86%;white-space:nowrap;padding:13px 26px;font-size:.95rem}
+.contact-box .wxbtn{position:relative}
+.contact-box .copyicon{flex-shrink:0;font-size:.74rem;font-weight:600;background:#fdeef3;color:var(--accent);
+  padding:3px 10px;border-radius:99px;transition:.3s;line-height:1.3}
+.contact-box .wxbtn:hover .copyicon{background:var(--accent);color:#fff}
+.contact-box .wxbtn.copied .copyicon{background:#7c9a5c;color:#fff}
+#toast{position:fixed;left:50%;bottom:60px;transform:translate(-50%,20px);background:rgba(45,42,38,.92);color:#fff;
+  font-size:.86rem;padding:11px 22px;border-radius:99px;opacity:0;transition:.35s;z-index:300;pointer-events:none;
+  box-shadow:0 8px 24px rgba(0,0,0,.2)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.contact-box a:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+@media(max-width:560px){
+  .contact-box{padding:48px 7vw}
+  .contact-box a{display:flex;width:100%;max-width:340px;margin:10px auto 0;padding:13px 18px;font-size:.9rem}
+  .contact-box .copyicon{font-size:.7rem;padding:3px 9px}
+  .contact-box .wxbtn .copyicon{position:static}
+}
+footer{text-align:center;color:var(--muted);font-size:.82rem;padding:36px 0 28px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">学娇<span>.</span>HR</div>
+  <ul>
+    <li><a href="#about">关于我</a></li>
+    <li><a href="#strategy">方法论</a></li>
+    <li><a href="#moments">现场瞬间</a></li>
+    <li><a href="#cases">人力案例</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <img class="avatar" src="img/avatar.jpg" alt="官学娇">
+  <h1>你好，我是<em>官学娇</em> 👋</h1>
+  <div class="slogan">有限预算 · 无限情绪价值</div>
+  <div class="typing"><span id="typed"></span><span class="cursor"></span></div>
+  <div class="tags">
+    <span class="tag">🧑‍💼 员工体验 / 人力行政</span>
+    <span class="tag">🍰 下午茶运营</span>
+    <span class="tag">🎉 团建策划</span>
+    <span class="tag">🤝 员工关系</span>
+    <span class="tag">🤖 AI 提效</span>
+  </div>
+  <a class="btn" href="#strategy">查看我的作品 ↓</a>
+  <div class="scroll-hint">▼ 向下滚动</div>
+</header>
+
+<section id="about">
+  <h2 class="sec-title reveal">关于我</h2>
+  <p class="sec-sub reveal">把每一份关怀，都做成有温度的员工体验</p>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>一名专注<b>员工体验</b>的人力行政从业者，擅长用有限的预算创造无限的"情绪价值"——从日常下午茶、节日活动到团建聚餐，让每一位同事感受到被重视。</p>
+      <p>不仅会办活动：还用 <b>AI 工具为招聘提效</b>、主导<b>劳动争议风险管控</b>与<b>跨地域制度协同</b>，是懂业务、能落地的复合型 HR。</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat reveal"><b>+33%</b><span>成功争取下午茶预算涨幅</span></div>
+      <div class="stat reveal"><b>¥20/人</b><span>"高配"下午茶人均体验</span></div>
+      <div class="stat reveal"><b>4季</b><span>主题化下午茶全年体系</span></div>
+      <div class="stat reveal"><b>AI</b><span>简历智能体招聘提效</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="strategy">
+  <h2 class="sec-title reveal">员工体验方法论</h2>
+  <p class="sec-sub reveal">下午茶运营的三大核心策略</p>
+  <div class="strategy reveal">
+    <div class="scard">
+      <div class="num">ONE</div>
+      <h3>💰 合理争取预算</h3>
+      <p>基于杭州物价调研出具数据方案，成功将日常下午茶预算由 15 元提升至 20 元（涨幅 33%），并为特定节假日申请额外经费。</p>
+    </div>
+    <div class="scard">
+      <div class="num">TWO</div>
+      <h3>🔗 资源整合</h3>
+      <p>巧借同事盒马会员 88 折锁定生鲜烘焙；通过美团私域沟通谈判，成功拿到商家底价。</p>
+    </div>
+    <div class="scard">
+      <div class="num">THREE</div>
+      <h3>🤝 资源置换</h3>
+      <p>圣诞活动中利用"错峰"优势，与蛋糕店沟通出借高级摆台并升级饮品包装，实现人均 20 元的"高配"体验。</p>
+    </div>
+  </div>
+</section>
+
+<section id="moments">
+  <div class="reveal">
+    <div class="moments-head">
+      <div>
+        <h2>温暖的瞬间</h2>
+        <div class="desc">从四季下午茶到节日活动，用有限预算创造让人记住的时刻。</div>
+      </div>
+      <div class="filters">
+        <button class="fbtn active" data-f="all">全部</button>
+        <button class="fbtn" data-f="team">团建活动</button>
+        <button class="fbtn" data-f="tea">下午茶</button>
+        <button class="fbtn" data-f="fest">节日活动</button>
+      </div>
+    </div>
+    <div class="mgrid">
+      <div class="mcard" data-cat="team">
+        <div class="frame"><div class="track"><img src="img/聚餐1.jpg" alt="年后第一次相聚"><img src="img/聚餐2.jpg" alt="年后第一次相聚"></div><button class="nav prev" aria-label="上一张">‹</button><button class="nav next" aria-label="下一张">›</button><div class="pager">1 / 2</div></div>
+        
+        <div class="label">01 / TEAM DINNER</div>
+        <h3>年后第一次相聚</h3>
+        <p>日常聚餐，在谈笑间破冰——一顿饭的距离，让同事少一分陌生、多一分熟悉。</p>
+      </div>
+      <div class="mcard" data-cat="tea">
+        <div class="frame"><div class="track"><img src="img/春夏1.jpg" alt="元气春夏"><img src="img/春夏2.jpg" alt="元气春夏"><img src="img/春夏3.jpg" alt="元气春夏"><img src="img/春夏4.jpg" alt="元气春夏"></div><button class="nav prev" aria-label="上一张">‹</button><button class="nav next" aria-label="下一张">›</button><div class="pager">1 / 4</div></div>
+        <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="label">02 / SPRING &amp; SUMMER</div>
+        <h3>元气春夏</h3>
+        <p>春日奶茶与小蛋糕，夏日西瓜、果切和水果酸奶，让季节的变化走进下午茶。</p>
+      </div>
+      <div class="mcard" data-cat="tea">
+        <div class="frame"><div class="track"><img src="img/秋冬1.jpg" alt="温暖秋冬"><img src="img/秋冬2.jpg" alt="温暖秋冬"><img src="img/秋冬3.jpg" alt="温暖秋冬"><img src="img/秋冬4.jpg" alt="温暖秋冬"></div><button class="nav prev" aria-label="上一张">‹</button><button class="nav next" aria-label="下一张">›</button><div class="pager">1 / 4</div></div>
+        <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="label">03 / AUTUMN &amp; WINTER</div>
+        <h3>温暖秋冬</h3>
+        <p>秋日糖炒栗子与限定果茶，冬日炸鸡与披萨，为忙碌的工作日添一份暖意。</p>
+      </div>
+      <div class="mcard" data-cat="fest">
+        <div class="frame"><div class="track"><img src="img/圣诞1.jpg" alt="圣诞的小小仪式感"><img src="img/圣诞2.jpg" alt="圣诞的小小仪式感"><img src="img/圣诞3.jpg" alt="圣诞的小小仪式感"></div><button class="nav prev" aria-label="上一张">‹</button><button class="nav next" aria-label="下一张">›</button><div class="pager">1 / 3</div></div>
+        <div class="dots"><i class="on"></i><i></i><i></i></div>
+        <div class="label">04 / CHRISTMAS</div>
+        <h3>圣诞的小小仪式感</h3>
+        <p>利用错峰与商家沟通，借用摆台、升级饮品包装，在人均 20 元预算内丰富活动体验。</p>
+      </div>
+      <div class="mcard" data-cat="fest">
+        <div class="frame"><div class="track"><img src="img/六一1.jpg" alt="六一，找回一点童心"><img src="img/六一2.png" alt="六一游戏规则"><img src="img/六一3.png" alt="六一趣味游戏礼品"></div><button class="nav prev" aria-label="上一张">‹</button><button class="nav next" aria-label="下一张">›</button><div class="pager">1 / 3</div></div>
+        <div class="label">05 / CHILDREN'S DAY</div>
+        <h3>六一，找回一点童心</h3>
+        <p>投壶 × 桌面冰壶双游戏积分赛，两局总分排名挑选礼物——用 AI 生成游戏规则与奖品海报，让平常的工作日多一点轻松和惊喜。</p>
+      </div>
+      <div class="mcard" data-cat="fest">
+        <div class="frame"><div class="track"><img src="img/七夕1.jpg" alt="七夕的温柔心意"><img src="img/七夕2.jpeg" alt="七夕的温柔心意"><img src="img/七夕3.jpg" alt="七夕的温柔心意"></div><button class="nav prev" aria-label="上一张">‹</button><button class="nav next" aria-label="下一张">›</button><div class="pager">1 / 3</div></div>
+        <div class="dots"><i class="on"></i><i></i><i></i></div>
+        <div class="label">06 / QIXI FESTIVAL</div>
+        <h3>七夕的温柔心意</h3>
+        <p>把节日氛围融入员工体验，记录值得珍藏的小瞬间。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cases">
+  <h2 class="sec-title reveal">人力案例</h2>
+  <p class="sec-sub reveal">不止于活动，更懂专业</p>
+  <div class="cases">
+    <div class="case reveal">
+      <div class="cover c1">🤖</div>
+      <div class="body">
+        <h3>招聘 × AI 提效</h3>
+        <p>基于扣子（Coze）平台搭建简历评分与筛选智能体，并接入 GPT 联动 BOSS 直聘批量筛选简历，打造 GPT 人力工作台，大幅缩短简历初筛时间。</p>
+        <div class="chips"><span class="chip">扣子智能体</span><span class="chip">GPT 工作台</span><span class="chip">降本提效</span></div>
+      </div>
+    </div>
+    <div class="case reveal">
+      <div class="cover c2">⚖️</div>
+      <div class="body">
+        <h3>劳动争议与风险管控</h3>
+        <p>参与劳动仲裁案件全过程应对，从证据整理、沟通记录留存到仲裁庭答辩材料准备，沉淀劳动风险管控流程，帮助企业规避用工风险。</p>
+        <div class="chips"><span class="chip">劳动仲裁</span><span class="chip">风险管控</span><span class="chip">证据留存</span></div>
+      </div>
+    </div>
+    <div class="case reveal">
+      <div class="cover c3">🌏</div>
+      <div class="body">
+        <h3>跨地域协同</h3>
+        <p>主导杭州共建团队的跨地域协同机制，推动弹性打卡等制度落地，从初版方案到多方沟通对齐，最终实现两地制度的统一执行。</p>
+        <div class="chips"><span class="chip">跨地域</span><span class="chip">制度落地</span><span class="chip">弹性打卡</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="contact-box reveal">
+    <h2>期待与您交流 🤝</h2>
+    <a href="mailto:guanxj09@163.com">📮 guanxj09@163.com</a>　<a href="javascript:void(0)" id="wxcopy" class="wxbtn">💬 微信：hhoneyguan　<span class="copyicon">复制</span></a>
+  </div>
+</section>
+
+<footer>© 2025 官学娇 · 员工体验作品集 · Made with ❤️</footer>
+
+<div id="toast">微信号已复制 ✅</div>
+
+<div id="lightbox"><img src="" alt=""></div>
+
+<script>
+// 打字机（两句）
+const lines=["一名用有限预算创造无限情绪价值的员工体验官 ✨","把每一场活动，都变成团队的美好记忆 🎉"];
+let li=0,ci=0,del=false;const el=document.getElementById("typed");
+function type(){
+  const t=lines[li];
+  el.textContent=t.slice(0,ci);
+  if(!del&&ci<t.length){ci++;setTimeout(type,90)}
+  else if(!del&&ci===t.length){del=true;setTimeout(type,1800)}
+  else if(del&&ci>0){ci--;setTimeout(type,35)}
+  else{del=false;li=(li+1)%lines.length;setTimeout(type,400)}
+}
+type();
+
+// 滚动显现
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach((el,i)=>{el.style.transitionDelay=(i%3)*0.12+"s";io.observe(el)});
+
+// 分类筛选
+document.querySelectorAll(".fbtn").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  const f=btn.dataset.f;
+  document.querySelectorAll(".mcard").forEach(c=>{
+    c.classList.toggle("hide", f!=="all" && c.dataset.cat!==f);
+  });
+}));
+
+// 手动滑动（无自动播放）
+document.querySelectorAll(".mcard").forEach(card=>{
+  const fr=card.querySelector(".frame"),track=card.querySelector(".track");
+  const n=track.children.length;if(n<=1)return;
+  const pager=fr.querySelector(".pager"),dots=card.querySelectorAll(".dots i");
+  let idx=0,dragging=false,startX=0,curX=0,w=0;
+  const render=()=>{track.style.transform=`translateX(-${idx*100}%)`;
+    if(pager)pager.textContent=`${idx+1} / ${n}`;
+    dots.forEach((d,i)=>d.classList.toggle("on",i===idx));};
+  const go=i=>{idx=Math.max(0,Math.min(n-1,i));render();};
+  fr.querySelector(".prev")?.addEventListener("click",e=>{e.stopPropagation();go(idx-1)});
+  fr.querySelector(".next")?.addEventListener("click",e=>{e.stopPropagation();go(idx+1)});
+  dots.forEach((d,i)=>d.addEventListener("click",()=>go(i)));
+  // 拖拽
+  const down=x=>{dragging=true;startX=x;curX=x;w=fr.clientWidth;fr.classList.add("dragging")};
+  const move=x=>{if(!dragging)return;curX=x;
+    const dx=curX-startX;
+    track.style.transform=`translateX(calc(-${idx*100}% + ${dx}px))`;};
+  const up=()=>{if(!dragging)return;dragging=false;fr.classList.remove("dragging");
+    const dx=curX-startX;
+    if(Math.abs(dx)>w*0.18){go(idx+(dx<0?1:-1))}else{render()}};
+  fr.addEventListener("mousedown",e=>{e.preventDefault();down(e.clientX)});
+  window.addEventListener("mousemove",e=>move(e.clientX));
+  window.addEventListener("mouseup",up);
+  fr.addEventListener("touchstart",e=>down(e.touches[0].clientX),{passive:true});
+  fr.addEventListener("touchmove",e=>move(e.touches[0].clientX),{passive:true});
+  fr.addEventListener("touchend",up);
+});
+
+// 复制微信号
+const wxbtn=document.getElementById("wxcopy"),toast=document.getElementById("toast");
+if(wxbtn){
+  wxbtn.addEventListener("click",async()=>{
+    const wx="hhoneyguan";
+    try{
+      if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(wx)}
+      else{ // 兼容旧浏览器/非安全上下文
+        const ta=document.createElement("textarea");ta.value=wx;ta.style.position="fixed";
+        ta.style.opacity="0";document.body.appendChild(ta);ta.select();
+        document.execCommand("copy");document.body.removeChild(ta);
+      }
+      wxbtn.classList.add("copied");
+      wxbtn.querySelector(".copyicon").textContent="已复制";
+      toast.classList.add("show");
+      clearTimeout(wxbtn._t);clearTimeout(toast._t);
+      wxbtn._t=setTimeout(()=>{wxbtn.classList.remove("copied");
+        wxbtn.querySelector(".copyicon").textContent="复制"},1800);
+      toast._t=setTimeout(()=>toast.classList.remove("show"),1800);
+    }catch(e){
+      toast.textContent="复制失败，请手动选择微信号";
+      toast.classList.add("show");
+      setTimeout(()=>toast.classList.remove("show"),2000);
+    }
+  });
+}
+
+// 灯箱
+const lb=document.getElementById("lightbox"),lbimg=lb.querySelector("img");
+document.querySelectorAll(".mcard .track img").forEach(im=>im.addEventListener("click",e=>{
+  e.stopPropagation();lbimg.src=im.src;lb.classList.add("show")}));
+lb.addEventListener("click",()=>lb.classList.remove("show"));
+</script>
+</body>
+</html>
